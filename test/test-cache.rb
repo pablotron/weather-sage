@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'fileutils'
-require_relative '../lib/weathergov'
+require_relative '../lib/weather-gov'
 
 class TestWeatherGovCache < Minitest::Test
   def setup

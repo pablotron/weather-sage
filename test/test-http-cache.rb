@@ -71,10 +71,8 @@ class TestWeatherGovHttpCache < Minitest::Test
   #
   # Read given URL.
   #
-  # FIXME: need to manage encoding with Net::HTTP
-  #
   def read_url(url)
-    # open(url, 'rb', encoding: 'UTF-8') { |fh| fh.read }
-    open(url, 'rb') { |fh| fh.read }
+    open(url, 'rb', encoding: 'UTF-8') { |fh| fh.read }
+    # open(url, 'rb') { |fh| fh.read }
   end
 end

@@ -97,6 +97,9 @@ module WeatherGov
     # Parse HTTP response body.
     #
     def parse(resp)
+      # FIXME: need to extract encoding from content-type
+      resp.body.force_encoding('UTF-8')
+
       r = case resp.content_type
       when JSON_CONTENT_TYPE_REGEX
         # parse and return json

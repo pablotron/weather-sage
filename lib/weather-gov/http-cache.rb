@@ -1,4 +1,5 @@
-require 'unirest'
+require 'net/http'
+require 'json'
 
 module WeatherGov
   class HttpCache
@@ -10,8 +11,8 @@ module WeatherGov
     #
     # +timeout+ defaults to 30 minutes if unspecified.
     #
-    def initialize(path, timeout = 30 * 60)
-      @path, @timeout = path.freeze, timeout
+    def initialize(path, log, timeout = 30 * 60)
+      @path, @log, @timeout = path.freeze, log, timeout
       @cache = Cache.new(@path)
     end
 
@@ -27,20 +28,14 @@ module WeatherGov
     # Get cached URL, or request it if it is not cached.
     #
     def get(url, params = {})
-      # build key
-      key = key_for(url, params)
+      # parse URL into URI, get key
+      uri = URI.parse(url)
+      uri.query = URI.encode_www_form(params) if params.size > 0
+      str = uri.to_s
 
-      unless r = @cache.get(key)
-        # execute request
-        resp = Unirest.get(url, headers: HEADERS, parameters: params)
-
-        # check for error
-        unless success?(resp.code)
-          raise HttpError.new(key, resp.code, resp)
-        end
-
-        # cache result
-        r = @cache.set(key, resp.body, @timeout)
+      unless r = @cache.get(str)
+        # fetch response, parse body, and cache result
+        r = @cache.set(str, parse(fetch(uri)), @timeout)
       end
 
       # return result
@@ -50,25 +45,76 @@ module WeatherGov
     private
 
     #
-    # Returns true if the HTTP response code +code+ is a success code
-    # (e.g. 2xx).
+    # Fetch URI, and return response.
     #
-    def success?(code)
-      (code / 100) == 2
+    # Raises an HttpError on error.
+    #
+    def fetch(uri, limit = 5)
+      # create request, set headers
+      req = Net::HTTP::Get.new(uri)
+      HEADERS.each { |k, v| req[k] = v }
+      use_ssl = (uri.scheme == 'https')
+
+      # connect, fetch response
+      resp = Net::HTTP.start(uri.host, uri.port, use_ssl: use_ssl) do |http|
+        http.request(req)
+      end
+
+      # check for error
+      case resp
+      when Net::HTTPSuccess
+        resp
+      when Net::HTTPRedirection
+        # raise error if we've hit the redirect limit
+        raise HttpError.new(uri.to_s, resp.code, resp) unless limit > 0
+
+        # get new uri
+        new_uri = uri.merge(resp['location'])
+
+        # log redirect
+        @log.debug('HttpCache#fetch') do
+          'redirect: %s' % [JSON.unparse({
+            location: resp['location'],
+            old_uri: uri,
+            new_uri: new_uri,
+          })]
+        end
+
+        # decriment limit, redirect
+        fetch(new_uri, limit - 1)
+      else
+        raise HttpError.new(uri.to_s, resp.code, resp)
+      end
     end
 
     #
-    # Build a cache key for the given URL +url+ and parameter hash
-    # +params+.
+    # Regex match for known JSON content types.
     #
-    def key_for(url, params)
-      key = url
+    JSON_CONTENT_TYPE_REGEX =
+      /^application\/json|text\/json|application\/geo\+json/
 
-      if params.size > 0
-        key += '?' + params.map { |k, v| "#{k}=#{v}" }.join('&')
+    #
+    # Parse HTTP response body.
+    #
+    def parse(resp)
+      r = case resp.content_type
+      when JSON_CONTENT_TYPE_REGEX
+        # parse and return json
+        JSON.parse(resp.body)
+      else
+        # return string
+        resp.body
       end
 
-      key
+      @log.debug('HttpCache#parse') do
+        JSON.unparse({
+          type: resp.content_type,
+          data: r,
+        })
+      end
+
+      # return response
+      r
     end
   end
 end

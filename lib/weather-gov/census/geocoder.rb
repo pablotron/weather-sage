@@ -1,7 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'unirest'
-
 module WeatherGov
   module Census
     #
@@ -27,14 +23,14 @@ module WeatherGov
       def run(s)
         # reference:
         # https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.pdf
-        body = @ctx.cache.get(URL, {
+        data = @ctx.cache.get(URL, {
           address: s,
           returntype: 'locations',
           benchmark: 'Public_AR_Current',
           format: 'json',
         })
 
-        body['result']['addressMatches'].map { |row|
+        data['result']['addressMatches'].map { |row|
           Match.new(@ctx, row)
         }
       end

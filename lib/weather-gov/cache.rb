@@ -46,6 +46,9 @@ module WeatherGov
 
         # save entry
         @pstore[key] = CacheEntry.new(expires, val)
+
+        # purge any expired entries
+        flush
       end
 
       # return value
@@ -75,5 +78,16 @@ module WeatherGov
 
     alias :[] :get
     alias :[]= :set
+
+    private
+
+    #
+    # Purge expired entries.
+    #
+    def flush
+      @pstore.roots.each do |key|
+        @pstore.delete(key) unless @pstore[key].valid?
+      end
+    end
   end
 end

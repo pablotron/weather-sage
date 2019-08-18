@@ -11,7 +11,7 @@ module WeatherGov
     #
     # Default cache path.
     #
-    CACHE_PATH = '~/.config/weathergov/http-cache.pstore'
+    CACHE_PATH = '~/.config/weather-gov/http-cache.pstore'
     
     #
     # Entry point for command-line interface.
@@ -34,23 +34,26 @@ module WeatherGov
     #
     def self.get_context
       # create logger
-      log = ::Logger.new(if ENV.key?('WEATHERGOV_LOG_PATH') 
-        File.open(ENV['WEATHERGOV_LOG_PATH'],'ab')
+      log = ::Logger.new(if ENV.key?('WEATHER_GOV_LOG_PATH')
+        File.open(ENV['WEATHER_GOV_LOG_PATH'],'ab')
       else
         STDERR
       end)
 
       # set log level
-      log.level = ::Logger.const_get((ENV['WEATHERGOV_LOG_LEVEL'] || 'info').upcase)
+      log.level = ::Logger.const_get((ENV['WEATHER_GOV_LOG_LEVEL'] || 'info').upcase)
 
       # get cache path
-      unless cache_path = ENV['WEATHERGOV_CACHE_PATH']
+      unless cache_path = ENV['WEATHER_GOV_CACHE_PATH']
         cache_path = File.expand_path(CACHE_PATH)
         FileUtils.mkdir_p(File.dirname(cache_path))
       end
 
+      # create cache
+      cache = HttpCache.new(cache_path, log)
+
       # create and return context
-      Context.new(log, HttpCache.new(cache_path))
+      Context.new(log, cache)
     end
   end
 end

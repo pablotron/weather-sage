@@ -314,4 +314,5 @@ module WeatherGov
   end
 end
 
+# allow command-line invocation
 WeatherGov::CLI.run($0, ARGV) if __FILE__ == $0

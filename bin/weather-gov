@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-require_relative '../lib/weather-gov'
-
-# run command-line tool
-WeatherGov::CLI.run($0, ARGV)

@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   module CLI
     #
     # Base class for command-line commands.

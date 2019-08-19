@@ -1,6 +1,6 @@
 require 'pstore'
 
-module WeatherGov
+module WeatherSage
   #
   # Cache entry.
   #

@@ -1,6 +1,6 @@
-module WeatherGov
+module WeatherSage
   #
-  # Command-line interface for weathergov.
+  # Command-line interface for weather-sage.
   #
   module CLI
     autoload :Command, File.join(__dir__, 'cli', 'command.rb')
@@ -11,7 +11,7 @@ module WeatherGov
     #
     # Default cache path.
     #
-    DEFAULT_CACHE_PATH = '~/.config/weather-gov/http-cache.pstore'
+    DEFAULT_CACHE_PATH = '~/.config/weather-sage/http-cache.pstore'
     
     #
     # Entry point for command-line interface.
@@ -34,11 +34,11 @@ module WeatherGov
     #
     def self.get_context
       # get log level (default to "info" if unspecified)
-      log_level = (ENV['WEATHER_GOV_RUBY_LOG_LEVEL'] || 'info').upcase
+      log_level = (ENV['WEATHER_SAGE_LOG_LEVEL'] || 'info').upcase
 
       # create logger
-      log = ::Logger.new(if ENV.key?('WEATHER_GOV_RUBY_LOG_PATH')
-        File.open(ENV['WEATHER_GOV_RUBY_LOG_PATH'],'ab')
+      log = ::Logger.new(if ENV.key?('WEATHER_SAGE_LOG_PATH')
+        File.open(ENV['WEATHER_SAGE_LOG_PATH'],'ab')
       else
         # default to standard error
         STDERR
@@ -48,7 +48,7 @@ module WeatherGov
       log.level = ::Logger.const_get(log_level)
 
       # get cache path
-      unless cache_path = ENV['WEATHER_GOV_RUBY_CACHE_PATH']
+      unless cache_path = ENV['WEATHER_SAGE_CACHE_PATH']
         # use default cache path
         cache_path = File.expand_path(DEFAULT_CACHE_PATH)
 

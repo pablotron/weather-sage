@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   module Weather
     #
     # Weather station observation metadata.

@@ -1,7 +1,7 @@
 require 'net/http'
 require 'json'
 
-module WeatherGov
+module WeatherSage
   class HttpCache
     attr :path, :timeout
 
@@ -21,7 +21,7 @@ module WeatherGov
     #
     HEADERS = {
       'Accept'      => 'application/json',
-      'User-Agent'  => "weathergov-ruby/#{WeatherGov::VERSION}"
+      'User-Agent'  => "weather-sage/#{WeatherSage::VERSION}"
     }.freeze
 
     #

@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   module Weather
     #
     # Base class for weather API objects.

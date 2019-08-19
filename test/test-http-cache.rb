@@ -2,9 +2,9 @@ require 'minitest/autorun'
 require 'open-uri'
 require 'fileutils'
 require 'logger'
-require_relative '../lib/weather-gov'
+require_relative '../lib/weather-sage'
 
-class TestWeatherGovHttpCache < Minitest::Test
+class TestWeatherSageHttpCache < Minitest::Test
   #
   # list of test urls
   #
@@ -25,7 +25,7 @@ class TestWeatherGovHttpCache < Minitest::Test
     @log = ::Logger.new('/dev/null')
 
     # create cache instance
-    @cache = WeatherGov::HttpCache.new(path, @log)
+    @cache = WeatherSage::HttpCache.new(path, @log)
   end
 
   def test_new
@@ -33,7 +33,7 @@ class TestWeatherGovHttpCache < Minitest::Test
     path = File.join(@dir, 'test-new.pstore')
 
     # asset that cache is not nil
-    assert WeatherGov::HttpCache.new(path, @log)
+    assert WeatherSage::HttpCache.new(path, @log)
   end
 
   def test_new_timeout
@@ -43,7 +43,7 @@ class TestWeatherGovHttpCache < Minitest::Test
     timeout = 1
 
     # create cache with timeout
-    cache = WeatherGov::HttpCache.new(path, @log, timeout)
+    cache = WeatherSage::HttpCache.new(path, @log, timeout)
 
     # asset that timeout is saved
     assert_equal timeout, cache.timeout
@@ -61,7 +61,7 @@ class TestWeatherGovHttpCache < Minitest::Test
   end
 
   def test_get_bad
-    assert_raises(WeatherGov::HttpError) do
+    assert_raises(WeatherSage::HttpError) do
       @cache.get(URLS[:bad])
     end
   end

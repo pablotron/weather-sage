@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   module CLI
     #
     # Implementation of *geocode* command.

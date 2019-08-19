@@ -1,5 +1,4 @@
-
-module WeatherGov
+module WeatherSage
   module Census
     #
     # Matching address returned by Geocoder.
@@ -14,7 +13,7 @@ module WeatherGov
         x, y = %w{x y}.map { |k| data['coordinates'][k] }
         @data = data.freeze
         @address = @data['matchedAddress']
-        @point = WeatherGov::Weather::Point.new(ctx, x, y).freeze
+        @point = WeatherSage::Weather::Point.new(ctx, x, y).freeze
       end
     end
   end

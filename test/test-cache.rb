@@ -1,8 +1,8 @@
 require 'minitest/autorun'
 require 'fileutils'
-require_relative '../lib/weather-gov'
+require_relative '../lib/weather-sage'
 
-class TestWeatherGovCache < Minitest::Test
+class TestWeatherSageCache < Minitest::Test
   def setup
     # create temporary directory that is removed on exit
     @dir = Dir.mktmpdir('test-cache')
@@ -12,7 +12,7 @@ class TestWeatherGovCache < Minitest::Test
     path = File.join(@dir, 'cache.pstore')
 
     # create cache instance
-    @cache = WeatherGov::Cache.new(path)
+    @cache = WeatherSage::Cache.new(path)
   end
 
   def test_new
@@ -20,7 +20,7 @@ class TestWeatherGovCache < Minitest::Test
     path = File.join(@dir, 'test-new.pstore')
 
     # asset that cache is not nil
-    assert WeatherGov::Cache.new(path)
+    assert WeatherSage::Cache.new(path)
   end
 
   def test_set

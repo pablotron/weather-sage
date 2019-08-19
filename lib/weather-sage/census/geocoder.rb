@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   module Census
     #
     # Wrapper around Census geocoder API.

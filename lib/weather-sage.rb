@@ -1,14 +1,14 @@
 #
 # Wrapper around NWS weather.gov and Census bureau geocoder API.
 #
-module WeatherGov
+module WeatherSage
   #
   # Release version.
   #
   VERSION = '0.1.0'
 
   # :nodoc:
-  LIB_DIR = File.join(__dir__, 'weather-gov').freeze
+  LIB_DIR = File.join(__dir__, 'weather-sage').freeze
 
   autoload :Cache, File.join(LIB_DIR, 'cache.rb')
   autoload :HttpError, File.join(LIB_DIR, 'http-error.rb')

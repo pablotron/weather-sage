@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   module Weather
     #
     # Thin wrapper around lat/long point in weather API.

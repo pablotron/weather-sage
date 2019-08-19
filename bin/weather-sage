@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/weather-sage'
+
+# run command-line interface
+WeatherSage::CLI.run($0, ARGV)

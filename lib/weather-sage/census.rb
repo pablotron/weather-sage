@@ -1,5 +1,4 @@
-
-module WeatherGov
+module WeatherSage
   #
   # Thin wrapper around Census geocoder.
   #

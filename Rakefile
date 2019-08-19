@@ -6,11 +6,11 @@ Rake::TestTask.new do |t|
 end
 
 RDoc::Task.new :docs do |t|
-  t.main = "lib/luigi-template.rb"
+  t.main = "lib/weather-sage.rb"
   t.rdoc_files.include('lib/*.rb')
   t.rdoc_dir = 'docs'
   # t.options << "--all"
 end
 
 desc "Run tests"
-task :default => :test
+task default: :test

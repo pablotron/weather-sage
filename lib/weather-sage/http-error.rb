@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   #
   # HTTP error wrapper.
   #

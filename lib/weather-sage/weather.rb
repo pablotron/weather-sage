@@ -1,4 +1,4 @@
-module WeatherGov
+module WeatherSage
   #
   # Thin wrapper around weather.gov API.
   #

@@ -1,28 +1,27 @@
-module WeatherSage
+#
+# Command-line interface for weather-sage.
+#
+module WeatherSage::CLI
+  autoload :Commands, File.join(__dir__, 'cli', 'commands.rb')
+  autoload :Env, File.join(__dir__, 'cli', 'env.rb')
+
   #
-  # Command-line interface for weather-sage.
+  # Entry point for command-line interface.
   #
-  module CLI
-    autoload :Commands, File.join(__dir__, 'cli', 'commands.rb')
-    autoload :EnvContext, File.join(__dir__, 'cli', 'env-context.rb')
+  def self.run(app, args)
+    require 'csv'
+    require 'logger'
+    require 'fileutils'
 
-    #
-    # Entry point for command-line interface.
-    #
-    def self.run(app, args)
-      require 'csv'
-      require 'logger'
-      require 'fileutils'
+    args = ['help'] unless args.size > 0
 
-      args = ['help'] unless args.size > 0
+    # wrap environment and create context
+    env = Env::Env.new(ENV)
+    ctx = Env::Context.new(env)
 
-      # create context
-      ctx = EnvContext.new
-
-      # map first argument to command, then run it
-      (Commands.const_get('%sCommand' % [
-        args.shift.capitalize
-      ]) || Commands::HelpCommand).run(ctx, app, args)
-    end
+    # map first argument to command, then run it
+    (Commands.const_get('%sCommand' % [
+      args.shift.capitalize
+    ]) || Commands::HelpCommand).run(ctx, app, args)
   end
 end

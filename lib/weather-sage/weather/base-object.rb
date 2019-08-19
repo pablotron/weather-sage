@@ -1,40 +1,36 @@
-module WeatherSage
-  module Weather
-    #
-    # Base class for weather API objects.
-    #
-    class BaseObject
-      attr :cache
+#
+# Base class for weather API objects.
+#
+class WeatherSage::Weather::BaseObject
+  attr :cache
 
-      #
-      # Create a new weather object.
-      #
-      def initialize(ctx)
-        @ctx = ctx
-      end
+  #
+  # Create a new weather object.
+  #
+  def initialize(ctx)
+    @ctx = ctx
+  end
 
-      protected
+  protected
 
-      #
-      # URL format string for API requests.
-      #
-      API_URL = 'https://api.weather.gov/%s'
+  #
+  # URL format string for API requests.
+  #
+  API_URL = 'https://api.weather.gov/%s'
 
-      #
-      # Request given API endpoint, return response.
-      #
-      # FIXME: should handle errors too.
-      #
-      def get(path)
-        # build full URL
-        url = API_URL % [path]
+  #
+  # Request given API endpoint, return response.
+  #
+  # FIXME: should handle errors too.
+  #
+  def get(path)
+    # build full URL
+    url = API_URL % [path]
 
-        # log full URL
-        @ctx.log.debug('BaseObject#get') { '%s' % [url] }
+    # log full URL
+    @ctx.log.debug('BaseObject#get') { '%s' % [url] }
 
-        # get URL from cache
-        @ctx.cache.get(url)
-      end
-    end
+    # get URL from cache
+    @ctx.cache.get(url)
   end
 end

@@ -10,9 +10,9 @@ module WeatherSage
   # :nodoc:
   LIB_DIR = File.join(__dir__, 'weather-sage').freeze
 
+  autoload :CacheEntry, File.join(LIB_DIR, 'cache-entry.rb')
   autoload :Cache, File.join(LIB_DIR, 'cache.rb')
-  autoload :HttpError, File.join(LIB_DIR, 'http-error.rb')
-  autoload :HttpCache, File.join(LIB_DIR, 'http-cache.rb')
+  autoload :HTTP, File.join(LIB_DIR, 'http.rb')
   autoload :Context, File.join(LIB_DIR, 'context.rb')
   autoload :Census, File.join(LIB_DIR, 'census.rb')
   autoload :Weather, File.join(LIB_DIR, 'weather.rb')

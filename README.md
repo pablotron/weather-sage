@@ -1,13 +1,23 @@
 Weather Sage
 ============
-Get weather observations and the forecast for a given street address
-from the nearest weather station.
+Get weather for address from nearest weather station.
 
-Print the results to standard output as a CSV file.
+Example:
+    > weather-sage now '1600 pennsylvania ave washington dc'
+    address,name,type,value,unit,quality_control
+    1600 pennsylvania ave washington dc,timestamp,time,2019-08-19T06:52:00+00:00
+    1600 pennsylvania ave washington dc,textDescription,text,Mostly Cloudy
+    1600 pennsylvania ave washington dc,temperature,value,26.700000000000045,unit:degC,qc:V
+    1600 pennsylvania ave washington dc,relativeHumidity,value,81.65039907186703,unit:percent,qc:C
+    ... (lots more observations)
 
-Can also be used as a [Ruby][] library.
+You can also use Weather Sage to do the following:
+* Geocode an address.
+* List weather stations near an address.
 
-Requests information from the following:
+A [Ruby][] interface is also available.
+
+Information sources:
 * [National Weather Service Weather API][weather-api]
 * [Census Bureau Geocoding API][census-api]
 

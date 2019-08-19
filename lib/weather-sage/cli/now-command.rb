@@ -23,11 +23,11 @@ module WeatherSage
       # CSV column names.
       #
       COL_NAMES = %w{
-        input_address
-        property_name
-        property_type
-        property_value 
-        property_unit
+        address
+        name
+        type
+        value
+        unit
         quality_control
       }.freeze
 

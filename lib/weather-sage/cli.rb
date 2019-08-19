@@ -7,6 +7,7 @@ module WeatherSage
     autoload :HelpCommand, File.join(__dir__, 'cli', 'help-command.rb')
     autoload :GeocodeCommand, File.join(__dir__, 'cli', 'geocode-command.rb')
     autoload :NowCommand, File.join(__dir__, 'cli', 'now-command.rb')
+    autoload :StationsCommand, File.join(__dir__, 'cli', 'stations-command.rb')
 
     #
     # Default cache path.

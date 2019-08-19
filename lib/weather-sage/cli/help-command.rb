@@ -11,12 +11,12 @@ module WeatherSage
       #
       HELP = {
         line: '
-          Print list of all commands.
+          List commands.
         '.strip,
 
         full: [
-          'Print a list of all commands.  Use "help <command>" to show',
-          'additional details for a specific command.',
+          'List commands.  Use "help <command>" to show details for a',
+          'specific command.',
         ].join("\n"),
       }.freeze
 

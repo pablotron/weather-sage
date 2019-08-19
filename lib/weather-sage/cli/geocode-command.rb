@@ -11,11 +11,11 @@ module WeatherSage
       #
       HELP = {
         line: '
-          Geocode addresses and print results to standard output.
+          Geocode address.
         '.strip,
 
         full: [
-          'Geocode addresses and print results to standard output.',
+          'Geocode address.',
         ].join("\n"),
       }.freeze
 

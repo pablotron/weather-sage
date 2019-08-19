@@ -11,11 +11,11 @@ module WeatherSage
       #
       HELP = {
         line: '
-          Get current weather at the closest station to each address.
+          Get current weather from station closest to address.
         '.strip,
 
         full: [
-          'Get current weather at the closest station to each address.',
+          'Get current weather at from station closest to address.',
         ].join("\n")
       }.freeze
 

@@ -33,6 +33,8 @@ module WeatherSage
       uri.query = URI.encode_www_form(params) if params.size > 0
       str = uri.to_s
 
+      @log.debug('HttpCache#get') { '%s' % [str] }
+
       unless r = @cache.get(str)
         # fetch response, parse body, and cache result
         r = @cache.set(str, parse(fetch(uri)), @timeout)
@@ -50,6 +52,9 @@ module WeatherSage
     # Raises an HttpError on error.
     #
     def fetch(uri, limit = 5)
+      # log uri
+      @log.debug('HttpCache#fetch') { '%p' % [uri] }
+
       # create request, set headers
       req = Net::HTTP::Get.new(uri)
       HEADERS.each { |k, v| req[k] = v }
@@ -59,6 +64,9 @@ module WeatherSage
       resp = Net::HTTP.start(uri.host, uri.port, use_ssl: use_ssl) do |http|
         http.request(req)
       end
+
+      # log response
+      @log.debug('HttpCache#fetch') { 'response: %p' % [resp] }
 
       # check for error
       case resp
@@ -83,6 +91,10 @@ module WeatherSage
         # decriment limit, redirect
         fetch(new_uri, limit - 1)
       else
+        @log.debug('HttpCache#fetch') do
+          'HTTP request failed: url = %s, response = %p' % [uri, resp]
+        end
+
         raise HttpError.new(uri.to_s, resp.code, resp)
       end
     end

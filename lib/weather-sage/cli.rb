@@ -8,6 +8,8 @@ module WeatherSage
     autoload :GeocodeCommand, File.join(__dir__, 'cli', 'geocode-command.rb')
     autoload :NowCommand, File.join(__dir__, 'cli', 'now-command.rb')
     autoload :StationsCommand, File.join(__dir__, 'cli', 'stations-command.rb')
+    autoload :ForecastCommand, File.join(__dir__, 'cli', 'forecast-command.rb')
+    autoload :HourlyCommand, File.join(__dir__, 'cli', 'hourly-command.rb')
 
     #
     # Default cache path.
@@ -37,13 +39,8 @@ module WeatherSage
       # get log level (default to "info" if unspecified)
       log_level = (ENV['WEATHER_SAGE_LOG_LEVEL'] || 'info').upcase
 
-      # create logger
-      log = ::Logger.new(if ENV.key?('WEATHER_SAGE_LOG_PATH')
-        File.open(ENV['WEATHER_SAGE_LOG_PATH'],'ab')
-      else
-        # default to standard error
-        STDERR
-      end)
+      # create logger (default to stderr if env var isn't set)
+      log = ::Logger.new(ENV['WEATHER_SAGE_LOG_PATH'] || STDERR)
 
       # set log level (default to "info" if unspecified)
       log.level = ::Logger.const_get(log_level)

@@ -26,7 +26,14 @@ module WeatherSage
       # FIXME: should handle errors too.
       #
       def get(path)
-        @ctx.cache.get(API_URL % [path])
+        # build full URL
+        url = API_URL % [path]
+
+        # log full URL
+        @ctx.log.debug('BaseObject#get') { '%s' % [url] }
+
+        # get URL from cache
+        @ctx.cache.get(url)
       end
     end
   end

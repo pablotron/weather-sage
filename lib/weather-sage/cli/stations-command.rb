@@ -23,7 +23,7 @@ module WeatherSage
       # CSV column names.
       #
       COL_NAMES = %w{
-        input_address
+        address
         station_id
         station_name
         x

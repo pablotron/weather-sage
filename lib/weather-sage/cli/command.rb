@@ -12,6 +12,9 @@ module WeatherSage
       #
       def initialize(ctx, app)
         @ctx, @app = ctx, app
+
+        # create geocoder
+        @geocoder = Census::Geocoder.new(ctx)
       end
 
       #
@@ -27,6 +30,16 @@ module WeatherSage
       #
       def run(args)
         raise "not implemented"
+      end
+
+      protected
+
+      #
+      # Geocode given street address and return array of
+      # Census::Geocode::Match results.
+      #
+      def geocode(s)
+        @geocoder.run(s)
       end
     end
   end

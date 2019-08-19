@@ -32,16 +32,6 @@ module WeatherSage
       }.freeze
 
       #
-      # Create NowCommand instance.
-      #
-      def initialize(ctx, app)
-        super(ctx, app)
-
-        # cache geocoder
-        @geocoder = Census::Geocoder.new(ctx)
-      end
-
-      #
       # Run *now* command.
       #
       def run(args)
@@ -52,7 +42,7 @@ module WeatherSage
           # iterate over command-line arguments and write each one
           args.each do |arg|
             # geocode to first point
-            if pt = @geocoder.run(arg).first
+            if pt = geocode(arg).first
               # get first station
               if st = pt.point.stations.first
                 # get latest observation data

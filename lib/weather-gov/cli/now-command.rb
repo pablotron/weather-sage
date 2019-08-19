@@ -1,9 +1,9 @@
 module WeatherGov
   module CLI
     #
-    # Implementation of *get* command-line command.
+    # Implementation of *now* command-line command.
     #
-    class GetCommand < Command
+    class NowCommand < Command
       #
       # CSV column names
       #
@@ -17,7 +17,7 @@ module WeatherGov
       }.freeze
 
       #
-      # Create GetCommand instance.
+      # Create NowCommand instance.
       #
       def initialize(ctx, app)
         super(ctx, app)
@@ -25,7 +25,7 @@ module WeatherGov
       end
 
       #
-      # Run *get* command.
+      # Run *now* command.
       #
       def run(args)
         CSV(STDOUT) do |csv|

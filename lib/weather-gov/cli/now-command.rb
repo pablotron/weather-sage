@@ -5,7 +5,22 @@ module WeatherGov
     #
     class NowCommand < Command
       #
-      # CSV column names
+      # Help for this command.
+      #
+      # Used by the *help* command.
+      #
+      HELP = {
+        line: '
+          Get current weather at the closest station to each address.
+        '.strip,
+
+        full: [
+          'Get current weather at the closest station to each address.',
+        ].join("\n")
+      }.freeze
+
+      #
+      # CSV column names.
       #
       COL_NAMES = %w{
         input_address
@@ -21,6 +36,8 @@ module WeatherGov
       #
       def initialize(ctx, app)
         super(ctx, app)
+
+        # cache geocoder
         @geocoder = Census::Geocoder.new(ctx)
       end
 

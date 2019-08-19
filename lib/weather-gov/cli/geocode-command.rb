@@ -5,6 +5,21 @@ module WeatherGov
     #
     class GeocodeCommand < Command
       #
+      # Help for this command.
+      #
+      # Used by the *help* command.
+      #
+      HELP = {
+        line: '
+          Geocode addresses and print results to standard output.
+        '.strip,
+
+        full: [
+          'Geocode addresses and print results to standard output.',
+        ].join("\n"),
+      }.freeze
+
+      #
       # CSV columns.
       #
       CSV_COLS = %w{input_address match_address x y}

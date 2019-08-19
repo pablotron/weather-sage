@@ -14,9 +14,9 @@ address,name,type,value,unit,quality_control
 ... (lots more observations)
 ```
 
-You can also use Weather Sage to do the following:
-* Geocode an address.
-* List weather stations near an address.
+Other useful commands:
+* `geocode`: Geocode an address.
+* `stations`: List weather stations near an address.
 
 A [Ruby][] interface is also available.
 

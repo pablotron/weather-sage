@@ -58,7 +58,7 @@ module WeatherSage
       # Convert station to CSV row.
       #
       def make_row(address, s)
-        [address, s.station_id, s.name, s.x, s.y, s.elevation, s.time_zone]
+        [address, s.id, s.name, s.x, s.y, s.elevation, s.time_zone]
       end
     end
   end

@@ -4,7 +4,7 @@ module WeatherSage
     # Thin wrapper around weather station.
     #
     class Station < BaseObject
-      attr :station_id, :name, :x, :y, :elevation, :time_zone 
+      attr :id, :name, :x, :y, :elevation, :time_zone
 
       #
       # Create a new Station from the given Context +ctx+ and the JSON
@@ -25,9 +25,9 @@ module WeatherSage
       #
       # Create a new station instance.
       #
-      def initialize(ctx, station_id, name, time_zone, x, y, elevation)
+      def initialize(ctx, id, name, x, y, elevation, time_zone)
         @ctx = ctx
-        @station_id = station_id
+        @id = id
         @name = name
         @x = x
         @y = y
@@ -39,7 +39,7 @@ module WeatherSage
       # Return a hash of the latest observations from this station.
       #
       def latest_observations
-        path = 'stations/%s/observations/latest' % [@station_id]
+        path = 'stations/%s/observations/latest' % [@id]
         get(path)['properties']
       end 
     end

@@ -1,9 +1,14 @@
-weather-gov-ruby
-================
+weather-sage
+============
+Get weather observations or the weather forecast for a given street
+address from the nearest weather station, and print the results to
+standard output as a CSV file.
 
-Minimal [Ruby][] wrapper and command-line tool for [National Weather
-Service weather API][weather-api] and [Census bureau geocoding
-API][census-api].
+Can also be used as a [Ruby][] library.
+
+Requests information from the following:
+* [National Weather Service (NWS) Weather API][weather-api]
+* [Census bureau geocoding API][census-api]
 
   [ruby]: https://ruby-lang.org/
   [weather-api]: https://api.weather.gov/

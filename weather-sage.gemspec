@@ -1,4 +1,4 @@
-require_relative './lib/weather-gov'
+require_relative './lib/weather-sage'
 
 Gem::Specification.new do |s|
   s.name        = 'weather-sage'

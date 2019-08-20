@@ -5,62 +5,6 @@
 #
 class WeatherSage::CLI::Commands::BaseForecastCommand < WeatherSage::CLI::Commands::Command
   #
-  # List of CSV column properties.
-  #
-  COLUMNS = [{
-    name: 'address',
-    prop: nil,
-    show: %i{forecast hourly_forecast},
-  }, {
-    name: 'name',
-    prop: 'name',
-    show: %i{forecast},
-  }, {
-    name: 'start_time',
-    prop: 'startTime',
-    show: %i{hourly_forecast},
-  }, {
-    name: 'end_time',
-    prop: 'endTime',
-    show: %i{hourly_forecast},
-  }, {
-    name: 'is_daytime',
-    prop: 'isDaytime',
-    show: %i{},
-  }, {
-    name: 'temperature',
-    prop: 'temperature',
-    show: %i{forecast hourly_forecast},
-  }, {
-    name: 'temperature_unit',
-    prop: 'temperatureUnit',
-    show: %i{forecast hourly_forecast},
-  }, {
-    name: 'temperature_trend',
-    prop: 'temperatureTrend',
-    show: %i{},
-  }, {
-    name: 'wind_speed',
-    prop: 'windSpeed',
-    show: %i{forecast hourly_forecast},
-  }, {
-    name: 'wind_direction',
-    prop: 'windDirection',
-    show: %i{forecast hourly_forecast},
-  }, {
-    name: 'icon',
-    prop: 'icon',
-    show: %i{},
-  }, {
-    name: 'short_forecast',
-    prop: 'shortForecast',
-    show: %i{forecast hourly_forecast},
-  }, {
-    name: 'detailed_forecast',
-    prop: 'detailedForecast',
-    show: %i{},
-  }].freeze
-  #
   # Do not invoke this method directly; subclass this class and
   # override the +run+ method.
   #
@@ -73,17 +17,8 @@ class WeatherSage::CLI::Commands::BaseForecastCommand < WeatherSage::CLI::Comman
   # Run command.
   #
   def run(args)
-    # get mode
-    mode = case args.first
-    when /^-f|--full$/
-      args.shift
-      :full
-    when /^-b|--brief$/
-      args.shift
-      :brief
-    else
-      :brief
-    end
+    # get mode and args
+    mode, args = parse_args(args)
 
     CSV(STDOUT) do |csv|
       # write column names
@@ -104,6 +39,20 @@ class WeatherSage::CLI::Commands::BaseForecastCommand < WeatherSage::CLI::Comman
   private
 
   #
+  # Extract mode and args from command-line arguments.
+  #
+  def parse_args(args)
+    case args.first
+    when /^-f|--full$/
+      [:full, args[1 .. -1]]
+    when /^-b|--brief$/
+      [:brief, args[1 .. -1]]
+    else
+      [:brief, args]
+    end
+  end
+
+  #
   # Convert forecast period to CSV row.
   #
   def make_row(mode, address, p)
@@ -116,8 +65,6 @@ class WeatherSage::CLI::Commands::BaseForecastCommand < WeatherSage::CLI::Comman
   # Get columns for given mode.
   #
   def columns(mode)
-    COLUMNS.select { |col|
-      (mode == :full) || col[:show].include?(@forecast_method)
-    }
+    ::WeatherSage::CLI::Forecast::columns(@forecast_method, mode)
   end
 end

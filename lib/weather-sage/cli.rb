@@ -4,6 +4,8 @@
 module WeatherSage::CLI
   autoload :Commands, File.join(__dir__, 'cli', 'commands.rb')
   autoload :Env, File.join(__dir__, 'cli', 'env.rb')
+  autoload :Help, File.join(__dir__, 'cli', 'help.rb')
+  autoload :Forecast, File.join(__dir__, 'cli', 'forecast.rb')
 
   #
   # Entry point for command-line interface.

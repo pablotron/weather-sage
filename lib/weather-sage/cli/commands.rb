@@ -1,16 +1,15 @@
-module WeatherSage
-  module CLI
-    #
-    # Namespace for command-line commands.
-    #
-    module Commands
-      autoload :Command, File.join(__dir__, 'commands', 'command.rb')
-      autoload :HelpCommand, File.join(__dir__, 'commands', 'help.rb')
-      autoload :GeocodeCommand, File.join(__dir__, 'commands', 'geocode.rb')
-      autoload :NowCommand, File.join(__dir__, 'commands', 'now.rb')
-      autoload :StationsCommand, File.join(__dir__, 'commands', 'stations.rb')
-      autoload :ForecastCommand, File.join(__dir__, 'commands', 'forecast.rb')
-      autoload :HourlyCommand, File.join(__dir__, 'commands', 'hourly.rb')
-    end
-  end
+#
+# Namespace for command-line commands.
+#
+module WeatherSage::CLI::Commands
+  LIB_DIR = File.join(__dir__, 'commands') # :nodoc:
+
+  autoload :Command, File.join(LIB_DIR, 'command.rb')
+  autoload :HelpCommand, File.join(LIB_DIR, 'help.rb')
+  autoload :GeocodeCommand, File.join(LIB_DIR, 'geocode.rb')
+  autoload :NowCommand, File.join(LIB_DIR, 'now.rb')
+  autoload :StationsCommand, File.join(LIB_DIR, 'stations.rb')
+  autoload :BaseForecastCommand, File.join(LIB_DIR, 'base-forecast.rb')
+  autoload :ForecastCommand, File.join(LIB_DIR, 'forecast.rb')
+  autoload :HourlyCommand, File.join(LIB_DIR, 'hourly.rb')
 end

@@ -28,11 +28,11 @@ class WeatherSage::CLI::Env::Log < ::Logger
     super(env.get('LOG_PATH', STDERR))
 
     # set log level (default to WARN)
-    level = ::Logger.const_get(level)
+    level = ::Logger.const_get(log_level)
 
     # log level
     info('Env::Log#initialize') do
-      'level = %p' % [level]
+      'level = %p' % [log_level]
     end
   end
 end

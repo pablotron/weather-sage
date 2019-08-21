@@ -25,7 +25,7 @@ class TestWeatherSageHttpCache < Minitest::Test
     @log = ::Logger.new('/dev/null')
 
     # create cache instance
-    @cache = WeatherSage::HttpCache.new(path, @log)
+    @cache = WeatherSage::HTTP::Cache.new(path, @log)
   end
 
   def test_new
@@ -33,20 +33,41 @@ class TestWeatherSageHttpCache < Minitest::Test
     path = File.join(@dir, 'test-new.pstore')
 
     # asset that cache is not nil
-    assert WeatherSage::HttpCache.new(path, @log)
+    assert WeatherSage::HTTP::Cache.new(path, @log)
   end
 
   def test_new_timeout
     # build absolute path to backing store for cache
     path = File.join(@dir, 'test-new-timeout.pstore')
 
+    # set timeout to one second
     timeout = 1
 
     # create cache with timeout
-    cache = WeatherSage::HttpCache.new(path, @log, timeout)
+    cache = WeatherSage::HTTP::Cache.new(path, @log, timeout)
 
     # asset that timeout is saved
     assert_equal timeout, cache.timeout
+  end
+
+  def test_new_timeout_expired
+    # build absolute path to backing store for cache
+    path = File.join(@dir, 'test-new-timeout.pstore')
+
+    # set timeout to one seconds
+    timeout = 1
+
+    # create cache with one second
+    cache = WeatherSage::HTTP::Cache.new(path, @log, timeout)
+
+    # get known good url
+    cache.get(URLS[:good])
+
+    # wait for entry to expire
+    sleep(timeout + 0.1)
+
+    # asset that entry is expired
+    assert !cache.key?(URLS[:good])
   end
 
   def test_get
@@ -61,7 +82,7 @@ class TestWeatherSageHttpCache < Minitest::Test
   end
 
   def test_get_bad
-    assert_raises(WeatherSage::HttpError) do
+    assert_raises(WeatherSage::HTTP::Error) do
       @cache.get(URLS[:bad])
     end
   end
@@ -71,8 +92,12 @@ class TestWeatherSageHttpCache < Minitest::Test
   #
   # Read given URL.
   #
+  # Note: currently forces UTF-8 encoding.
+  #
   def read_url(url)
-    open(url, 'rb', encoding: 'UTF-8') { |fh| fh.read }
     # open(url, 'rb') { |fh| fh.read }
+
+    # read contents of URL, force UTF-8 encoding
+    open(url, 'rb', encoding: 'UTF-8') { |fh| fh.read }
   end
 end

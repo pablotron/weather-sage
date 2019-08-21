@@ -1,5 +1,10 @@
 #
-# Wrapper around NWS weather.gov and Census bureau geocoder API.
+# Get weather forecast and current weather for address.
+#
+# Wrapper around the following APIs:
+#
+# * National Weather Service Weather API (https://api.weather.gov/)
+# * Census Bureau Geocoder API (https://geocoding.geo.census.gov/geocoder/)
 #
 module WeatherSage
   #

@@ -1,7 +1,7 @@
 #
 # HTTP error wrapper.
 #
-class WeatherSage::HTTP::Error << ::RuntimeError
+class WeatherSage::HTTP::Error < ::RuntimeError
   attr :url, :code, :response
 
   #

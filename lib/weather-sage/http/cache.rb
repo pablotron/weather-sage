@@ -22,8 +22,7 @@ class WeatherSage::HTTP::Cache
   #
   def get(url, params = {})
     # parse URL into URI, get key
-    uri = URI.parse(url)
-    uri.query = URI.encode_www_form(params) if params.size > 0
+    uri = make_uri(url, params)
     str = uri.to_s
 
     @log.debug('HTTP::Cache#get') { '%s' % [str] }
@@ -37,7 +36,23 @@ class WeatherSage::HTTP::Cache
     r
   end
 
+  #
+  # Returns true if the given URL in the cache.
+  #
+  def key?(url, params = {})
+    @cache.key?(make_uri(url, params).to_s)
+  end
+
   private
+
+  #
+  # Convert a URL and parameters to a URI.
+  #
+  def make_uri(url, params = {})
+    uri = URI.parse(url)
+    uri.query = URI.encode_www_form(params) if params.size > 0
+    uri
+  end
 
   #
   # Fetch URI, and return response.

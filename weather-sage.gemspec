@@ -8,11 +8,14 @@ Gem::Specification.new do |s|
   s.email       = 'pabs@pablotron.org'
   s.homepage    = 'https://github.com/pablotron/weather-sage'
   s.license     = 'MIT'
-  s.summary     = 'Client for the National Weather Service weather API.'
+  s.summary     = 'Get weather forecast for an address.'
   s.description = '
-    Ruby library and command-line client for accessing the National
-    Weather Service (NWS) weather API and the Census bureau geocoding
-    API.
+    Ruby library and command-line tool to get the weather forecast and
+    current weather observations for an address.
+
+    Uses the Census Bureau Geocoding API to geocode street addresses,
+    and the National Weather Service Weather API to get weather
+    forecasts and current weather observations.
   '
 
   s.metadata = {

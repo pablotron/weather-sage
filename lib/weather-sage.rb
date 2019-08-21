@@ -10,7 +10,7 @@ module WeatherSage
   #
   # Release version.
   #
-  VERSION = '0.1.2'
+  VERSION = '0.1.3'
 
   # :nodoc:
   LIB_DIR = File.join(__dir__, 'weather-sage').freeze

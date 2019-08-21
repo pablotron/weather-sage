@@ -26,7 +26,9 @@ Gem::Specification.new do |s|
     "wiki_uri"          => 'https://github.com/pablotron/weather-sage/wiki',
   }
 
-  s.files = Dir['{bin,lib,test}/*'] + %w{
+  s.bindir      = 'bin'
+  s.executables = 'weather-sage'
+  s.files = Dir['bin/weather-sage', '{lib,test}/**/*.rb'] + %w{
     README.md
     license.txt
     Rakefile

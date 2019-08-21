@@ -2,6 +2,7 @@ require 'fileutils'
 require 'logger'
 require 'minitest/autorun'
 require_relative '../lib/weather-sage'
+require_relative './test-helpers'
 
 class TestWeatherSageCensusGeocoder < Minitest::Test
   #
@@ -19,21 +20,8 @@ class TestWeatherSageCensusGeocoder < Minitest::Test
   }]
 
   def setup
-    # create temporary directory that is removed on exit
-    @dir = Dir.mktmpdir('test-census-geocoder')
-    at_exit { FileUtils.rm_r(@dir) }
-
-    # build absolute path to backing store for cache
-    cache_path = File.join(@dir, 'cache.pstore')
-
-    # create null logger
-    log = ::Logger.new('/dev/null')
-
-    # create cache instance
-    cache = WeatherSage::HTTP::Cache.new(cache_path, log)
-
-    # create and save context
-    @ctx = WeatherSage::Context.new(log, cache)
+    # cache test context
+    @ctx = WeatherSage::Tests.get_test_context
 
     # create and save geocoder
     @geocoder = WeatherSage::Census::Geocoder.new(@ctx)

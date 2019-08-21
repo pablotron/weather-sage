@@ -1,0 +1,9 @@
+Weather Sage TODO
+=================
+[ ] now: brief
+[x] split fetch into Fetcher
+[ ] add json output
+[ ] add Config, remove Env subclasses
+[ ] add remaining tests
+[ ] add better documentation
+[ ] expand API documentation with examples
